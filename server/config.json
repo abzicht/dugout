@@ -1,0 +1,16 @@
+{
+	"1": {
+		"name": "bla",
+		"description": "ble",
+		"toffset": 0,
+		"hoffset": 0,
+		"rs485_addr": 1
+		},
+	"2": {
+		"name": "bli",
+		"description": "blo",
+		"toffset": 0,
+		"hoffset": 0,
+		"rs485_addr": 8
+		}
+}
