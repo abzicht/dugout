@@ -4,8 +4,8 @@ try:
     from server import DugoutServer
     from sensors import DugoutSensors
 except ImportError:
-    from dugout.server import DugoutServer
-    from dugout.sensors import DugoutSensors
+    from dugoutserver.server import DugoutServer
+    from dugoutserver.sensors import DugoutSensors
 
 import logging
 import argparse
@@ -37,10 +37,20 @@ def main():
         config = json.load(config_file)
 
     logging.debug("Initializing Dugout Sensors")
-    sensors = DugoutSensors(config=config)
+    sensors = None
+    try:
+        sensors = DugoutSensors(config=config)
+    except Exception as msg:
+        logging.error(msg)
+        return
 
     logging.debug("Initializing Dugout Web Server")
-    server = DugoutServer(args.address, args.port, sensors, config)
+    server = None
+    try:
+        server = DugoutServer(args.address, args.port, sensors, config)
+    except Exception as msg:
+        logging.error(msg)
+        return
 
     def stop():
         logging.info("Stopping Dugout Server")
@@ -52,6 +62,10 @@ def main():
         logging.info("Dugout Server is ready")
         server.serve()
     except KeyboardInterrupt:
+        pass
+    except Exception as msg:
+        logging.error(msg)
+    finally:
         stop()
 
 

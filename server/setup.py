@@ -2,7 +2,7 @@ from setuptools import find_packages, setup
 from distutils.core import setup
 
 setup(
-    name='dugout-server',
+    name='dugoutserver',
     author='abzicht',
     version="0.0.0",
     author_email='abzicht@gmail.com',
