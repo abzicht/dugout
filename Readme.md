@@ -25,8 +25,8 @@ Our fork does exactly that and now we can use a Raspberry Pi and a MAX485 to
 speak to RS485 sensors.
 
 The [sensors in question](https://www.banggood.com/Modbus-RS485-Temperature-and-Humidity-Transmitter-Sensor-High-Precision-Monitoring-p-1159961.html?cur_warehouse=CN)
-have hilariously bad document. Multiple sources contradict each other,
-forcing you to fallback to trial-and-error.
+have hilariously bad documentation. Multiple sources contradict each other,
+forcing you to fall back to trial-and-error.
 
 Hear are some observations made while exploring this kind of sensor:
 
