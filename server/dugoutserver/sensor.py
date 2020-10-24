@@ -15,6 +15,14 @@ class DugoutSensor():
         self.toffset = toffset
         self.hoffset = hoffset
 
+    def get1(self):
+        return {
+                "success_t": True,
+                "success_h": True,
+                "temperature": 54.3,
+                "humidity": 23.4
+                }
+
     def get(self):
         logging.debug("Retrieving Data for Sensor {}".format(self.name))
         temperature = 0

@@ -6,6 +6,7 @@ import logging
 class DugoutServer():
     sensors = None
     config = None
+    ongoing_request = False
     def __init__(self, address, port, sensors_, config_):
         DugoutServer.sensors    = sensors_
         DugoutServer.config     = config_
@@ -30,9 +31,20 @@ class DugoutServer():
 
     class RequestHandler(BaseHTTPRequestHandler):
         def do_GET(self):
-            measurements = DugoutServer.sensors.get() # this is blocking
-            data = DugoutServer.process_measurements(measurements)
-            self.send_response(200)
-            self.send_header("Content-type", "application/json")
-            self.end_headers()
-            self.wfile.write(bytes(json.dumps(data), "utf-8"))
+            if DugoutServer.ongoing_request:
+                logging.debug("New request is delayed! An ongoing request was detected.")
+                while(DugoutServer.ongoing_request):
+                    time.sleep(0.05)
+                logging.debug("New request is now being processed.")
+            DugoutServer.ongoing_request = True
+            try:
+                measurements = DugoutServer.sensors.get() # this is blocking
+                data = DugoutServer.process_measurements(measurements)
+                self.send_response(200)
+                self.send_header("Content-type", "application/json")
+                self.end_headers()
+                self.wfile.write(bytes(json.dumps(data), "utf-8"))
+            except Exception as msg:
+                logging.error(msg)
+            finally:
+                DugoutServer.ongoing_request = False
