@@ -30,7 +30,7 @@ forcing you to fall back to trial-and-error.
 
 Hear are some observations made while exploring this kind of sensor:
 
-* The register addresses named in most documentation is off by one: if the
+* The register addresses named in most documentation are off by one: if the
   documentation states that temperature data is located in register 0x0001,
   use 0x0000 instead. The same is true for humidity.
 * You want to change the device address? Good luck. Most documentation will
