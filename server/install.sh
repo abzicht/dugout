@@ -23,6 +23,8 @@ WantedBy=multi-user.target
 " > ${systemdfile}
 chmod 644 ${systemdfile}
 
+python3 -c "import pymodbus"
+if [ "$?" -ne "0" ]; then # checks if pymodbus is missing and installs if this is the case
 install_path="/tmp/dugout-install"
 mkdir $install_path
 cd $install_path || (echo "Entering temporal pymodbus installation failed. Exiting" && exit 1)
@@ -30,6 +32,7 @@ git clone https://github.com/abzicht/pymodbus -b Driver-Enable || (echo "Cloning
 cd $install_path/pymodbus || (echo "Entering pymodbus clone failed. Exiting" && exit 1)
 python3 setup.py install || (echo "pymodbus installation failed. Exiting" && exit 1)
 rm -rf $install_path
+fi
 
 systemctl daemon-reload
 systemctl enable dugout-server.service
