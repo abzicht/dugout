@@ -1,9 +1,16 @@
 {
 	"1": {
-		"name": "bla",
-		"description": "ble",
+		"name": "Sensor 1",
+		"description": "Tür",
 		"toffset": 0,
 		"hoffset": 0,
 		"rs485_addr": 1
+		},
+	"2": {
+		"name": "Sensor 2",
+		"description": "Hinten",
+		"toffset": 0,
+		"hoffset": 0,
+		"rs485_addr": 8
 		}
 }
