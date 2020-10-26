@@ -1,12 +1,40 @@
 {
 	"elasticsearch": {
-		"address": "0.0.0.0",
+		"address": "tool.local",
 		"port": 9200,
-		"username": "dugoutcrawler",
-		"password": "example"
+		"username": "username",
+		"password": "password",
+		"index": "dugout-sensors",
+		"mapping": {
+			  "mappings":{
+				  "properties":{
+					  "timestamp": {
+						"type": "date"
+					  },
+					  "sensor_id": {
+						"type": "short"
+					  },
+					  "temperature": {
+						"type": "half_float"
+					  },
+					  "humidity": {
+						"type": "half_float"
+					  },
+					  "dewpoint": {
+						"type": "half_float"
+					  },
+					  "success_t": {
+						"type": "boolean"
+					  },
+					  "success_h": {
+						"type": "boolean"
+					  }
+				  }
+			  }
+			}
 		},
 	"dugoutserver": {
-		"address": "192.168.2.4",
+		"address": "address",
 		"port": 4321
 		}
 }
