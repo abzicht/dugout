@@ -73,8 +73,6 @@ def main():
 
     scheduler = BlockingScheduler(timezone="Europe/Berlin")
     callback()
-    callback()
-    callback()
     try:
         logging.info("Dugout Crawler is ready")
         #scheduler.add_job(callback, 'interval', minutes=args.interval, replace_existing=True)

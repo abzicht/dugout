@@ -34,7 +34,7 @@
 			}
 		},
 	"dugoutserver": {
-		"address": "address",
+		"address": "localhost",
 		"port": 4321
 		}
 }
