@@ -4,7 +4,7 @@ from pymodbus.payload import BinaryPayloadDecoder
 import logging
 
 class DugoutSensor():
-    max_attempts = 5 # the number of attempts to contact the sensor
+    max_attempts = 100 # the number of attempts to contact the sensor
 
     def __init__(self, rs485_client, address, name, description, rs485_addr, toffset=0, hoffset=0):
         self.rs485_client = rs485_client

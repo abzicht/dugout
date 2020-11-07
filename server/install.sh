@@ -16,7 +16,7 @@ After=multi-user.target
 [Service]
 Type=idle
 User=pi
-ExecStart=/usr/local/bin/dugout-server $config_dir/$config_name -a 192.168.2.4
+ExecStart=/usr/local/bin/dugout-server $config_dir/$config_name -a 127.0.0.1
 
 [Install]
 WantedBy=multi-user.target
