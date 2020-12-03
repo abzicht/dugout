@@ -17,9 +17,9 @@ def main():
     parser = argparse.ArgumentParser(description="Start the Dugout Crawler")
     parser.add_argument(dest='config', type=str,
                 help="The config file for server properties")
-    parser.add_argument('-i', '--interval', dest='interval', type=int, default=10,
-                help="The data crawl interval in minutes.")
-    parser.add_argument('-v', '--verbose', dest='verbosity', type=int, default=20,
+    parser.add_argument('-i', '--interval', dest='interval', type=int, default=5,
+            help="The data crawl interval in minutes (default: 5).")
+    parser.add_argument('-v', '--verbose', dest='verbosity', type=int, default=2,
                 help="""Level of verbosity. Select between
                 0 Nothing,
                 1 Debug,
@@ -75,8 +75,8 @@ def main():
     callback()
     try:
         logging.info("Dugout Crawler is ready")
-        #scheduler.add_job(callback, 'interval', minutes=args.interval, replace_existing=True)
-        scheduler.add_job(callback, 'interval', seconds=30, replace_existing=True)
+        scheduler.add_job(callback, 'interval', minutes=args.interval, replace_existing=True)
+        #scheduler.add_job(callback, 'interval', seconds=30, replace_existing=True)
         scheduler.start()
     except KeyboardInterrupt:
         pass
