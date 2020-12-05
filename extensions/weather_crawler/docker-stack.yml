@@ -1,0 +1,26 @@
+version: '3.7'
+# docker build -t  ./
+# docker stack deploy --compose-file docker-stack.yml dugout
+services:
+  dugout-weather-crawler:
+    image: dugout-weather-crawler:latest
+    networks:
+      - swarm_network
+      - default
+    configs:
+      - source: dugout_weather_config
+        target: /dugout-weather-crawler/config.json
+    deploy:
+      replicas: 1
+      placement:
+        constraints:
+          - node.hostname == tool
+configs:
+  dugout__weather_config:
+    name: dugout_weather_config-0
+    file: ./config.json
+
+networks:
+  swarm_network:
+    driver: overlay
+    external: true
