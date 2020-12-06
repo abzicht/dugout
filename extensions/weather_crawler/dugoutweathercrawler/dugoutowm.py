@@ -35,7 +35,7 @@ class DugoutOWM():
     'humidity': w.humidity,
     'dewpoint': dewpoint(temperature, w.humidity),
     'clouds': w.clouds,
-    'pressure': self.sensitive_retriever(w.pressure, 'press', -1),
+    'pressure': w.pressure['press'], #self.sensitive_retriever(w.pressure, 'press', -1),
     'detailed_status': w.detailed_status,
     'status': w.status,
     'sunrise': w.sunrise_time('date').strftime('%H-%M-%S'),
