@@ -5,11 +5,6 @@ import sys
 import logging
 from elasticsearch import Elasticsearch
 
-try:
-    from dugoutdew import dewpoint
-except ImportError:
-    from dugoutweathercrawler.dugoutdew import dewpoint
-
 class ElasticsearchPush():
     def __init__(self, address, port, username, password):
         url = 'http://{}:{}@{}:{}/'.format(username,password,address,port)
