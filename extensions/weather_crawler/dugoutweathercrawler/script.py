@@ -1,10 +1,10 @@
 #!/bin/python3
 
 try:
-    from dugoutpull import DugoutPull
+    from dugoutowm import DugoutOWM
     from elasticsearchpush import ElasticsearchPush
 except ImportError:
-    from dugoutweathercrawler.dugoutpull import DugoutPull
+    from dugoutweathercrawler.dugoutowm import DugoutOWM
     from dugoutweathercrawler.elasticsearchpush import ElasticsearchPush
 
 import logging
@@ -32,7 +32,7 @@ def main():
     args = parser.parse_args()
 
     logging.basicConfig(level=args.verbosity*10)
-    logging.info("Starting Dugout Crawler with interval {}m".format(args.interval))
+    logging.info("Starting Dugout Weather Crawler with interval {}m".format(args.interval))
 
     config = None
     with open(args.config, 'r') as config_file:
@@ -46,8 +46,8 @@ def main():
         index      = config['elasticsearch']['index']
         mapping    = config['elasticsearch']['mapping']
 
-        dugout_address = config['dugoutserver']['address']
-        dugout_port    = config['dugoutserver']['port']
+        owm_api_key = config['owm']['api_key']
+        owm_location = config['owm']['location']
     except Exception as msg:
         raise Exception('Unable to initialize config file at {}: {}'.format(args.config,msg))
 
@@ -60,23 +60,25 @@ def main():
         logging.error(msg)
         return
 
-    logging.debug("Initializing Dugout Puller")
-    puller = None
+    logging.debug("Initializing OWM Crawler")
+    owmshell = None
     try:
-        puller = DugoutPull(dugout_address, dugout_port)
+        owmshell = DugoutOWM(owm_api_key, owm_location)
     except Exception as msg:
         logging.error(msg)
         return
 
     def callback():
         logging.info('Performing crawl')
-        data = puller.pull()
-        pusher.bulk_push(index, data)
+        data = owmshell.pull()
+        logging.debug(data)
+        id_ = data['timestamp']
+        pusher.push(index, id_, data)
 
     scheduler = BlockingScheduler(timezone="Europe/Berlin")
     callback()
     try:
-        logging.info("Dugout Crawler is ready")
+        logging.info("Dugout Weather Crawler is ready")
         scheduler.add_job(callback, 'interval', minutes=args.interval, replace_existing=True)
         #scheduler.add_job(callback, 'interval', seconds=30, replace_existing=True)
         scheduler.start()
