@@ -4,17 +4,17 @@
 		"port": 9200,
 		"username": "username",
 		"password": "password",
-		"index": "dugout-sensors",
+		"index": "dugout-weather",
 		"mapping": {
 			  "mappings":{
 				  "properties":{
 					  "timestamp": {
 						"type": "date"
 					  },
-					  "sensor_id": {
-						"type": "short"
-					  },
 					  "temperature": {
+						"type": "half_float"
+					  },
+					  "felt_temperature": {
 						"type": "half_float"
 					  },
 					  "humidity": {
@@ -23,18 +23,44 @@
 					  "dewpoint": {
 						"type": "half_float"
 					  },
-					  "success_t": {
-						"type": "boolean"
+					  "clouds": {
+						"type": "short"
 					  },
-					  "success_h": {
-						"type": "boolean"
+					  "detailed_status": {
+						"type": "keyword"
+					  },
+					  "status": {
+						"type": "keyword"
+					  },
+					  "pressure": {
+						"type": "short"
+					  },
+					  "sunrise": {
+						"type": "date",
+						"format": "HH-mm-ss"
+					  },
+					  "sunset": {
+						"type": "date",
+						"format": "HH-mm-ss"
+					  },
+					  "visibility": {
+						"type": "short"
+					  },
+					  "wind_speed": {
+						"type": "float"
+					  },
+					  "wind_degree": {
+						"type": "short"
+					  },
+					  "weather_code": {
+						"type": "short"
 					  }
 				  }
 			  }
 			}
 		},
-	"dugoutserver": {
-		"address": "localhost",
-		"port": 4321
+	"owm": {
+		"api_key": "open-weather-map api key",
+		"location": "location identifier"
 		}
 }

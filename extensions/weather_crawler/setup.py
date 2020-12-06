@@ -10,7 +10,7 @@ setup(
     license='mit',
     include_package_data=False,
     packages=find_packages(),
-    install_requires=['apscheduler', 'elasticsearch', 'meteocalc'],
+    install_requires=['apscheduler', 'elasticsearch', 'meteocalc', 'pyowm'],
     entry_points={'console_scripts': [
         'dugout-weather-crawler=dugoutweathercrawler.script:main',
     ]},
