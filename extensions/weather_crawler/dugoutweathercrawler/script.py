@@ -21,7 +21,7 @@ def main():
             default=15,
             help="The data crawl interval in minutes (default: 15).")
     parser.add_argument('-v', '--verbose', dest='verbosity', type=int,
-            default=20,
+            default=2,
                 help="""Level of verbosity. Select between
                 0 Nothing,
                 1 Debug,

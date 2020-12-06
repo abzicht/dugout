@@ -16,7 +16,7 @@ services:
         constraints:
           - node.hostname == tool
 configs:
-  dugout__weather_config:
+  dugout_weather_config:
     name: dugout_weather_config-0
     file: ./config.json
 
