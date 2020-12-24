@@ -37,20 +37,33 @@ class DugoutSensors():
             response[sensor.address] = sensor.get()
         logging.debug("Retrieved Sensor Data")
         return response
+    
+    def set(self, calibration_config):
+        """
+        provide a dict of that format:
+        {
+        "Sensor 1": { # Sensor name (found in config)
+            "temperature": -1.5, # Temperature offset (optional)
+            "humidity": 5, # Humidity offset (optional)
+            },
+        ...
+        }
+        """
+        success = True
+        logging.info("Performing Sensor Calibration")
+        for sensor in self.sensors:
+            if sensor.name in calibration_config.keys():
+                sensor_config = calibration_config[sensor.name]
+                temperature = None
+                humidity = None
+                if 'temperature' in sensor_config:
+                    temperature = sensor_config['temperature']
+                if 'humidity' in sensor_config:
+                    humidity = sensor_config['humidity']
+                logging.info("Setting offsets for {} - T: {}, H: {}".format(sensor.name,temperature, humidity))
+                success = False if not sensor.set(temperature = temperature, humidity = humidity) else success
+        return success 
 
     def stop(self):
         logging.debug("Stopping Dugout Sensors")
         self.client.close()
-
-sensors = {
-    1: {
-        "success": True,
-        "temperature": -0.5,
-        "humidity": 52,
-        },
-    2: {
-        "success": True,
-        "temperature": 20.5,
-        "humidity": 62,
-        }
-}

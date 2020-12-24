@@ -1,5 +1,5 @@
 from pymodbus.constants import Endian
-from pymodbus.payload import BinaryPayloadDecoder
+from pymodbus.payload import BinaryPayloadDecoder, BinaryPayloadBuilder
 
 import logging
 
@@ -14,14 +14,6 @@ class DugoutSensor():
         self.rs485_addr = rs485_addr
         self.toffset = toffset
         self.hoffset = hoffset
-
-    def get1(self):
-        return {
-                "success_t": True,
-                "success_h": True,
-                "temperature": 54.3,
-                "humidity": 23.4
-                }
 
     def get(self):
         logging.debug("Retrieving Data for Sensor {}".format(self.name))
@@ -60,7 +52,31 @@ class DugoutSensor():
                 "humidity": humidity
                 }
 
-    def apply_offsets(self):
-        logging.warn("This functionality is not implemented")
-        logging.info("Sensor {}: Applying {}°C and {}% as offset".format(self.name, self.toffset, self.hoffset))
-        pass
+    def set(self, temperature:float = None, humidity:float = None):
+        success_t = True
+        success_h = True
+        if temperature:
+            temp = int(temperature * 10)
+            builder = BinaryPayloadBuilder(byteorder=Endian.Big)
+            builder.add_16bit_int(temp)
+            payload = builder.to_registers()[0]
+            print(payload)
+            #payload = builder.build()
+            #print(payload)
+            for i in range(0, DugoutSensor.max_attempts):
+                logging.debug("Setting temperature offset for Sensor {} at attempt {}".format(self.name, i+1))
+#                try:
+                    #self.rs485_client.write_register(0x0103, payload, unit=self.rs485_addr)
+                response = self.rs485_client.write_register(0x0003, 0x005, unit=self.rs485_addr)
+                print(response)
+#                except Exception as e:
+#                    #logging.debug(e)
+#                    print(e)
+#                    success_t = False
+#                else:
+#                    success_t = True
+                self.toffset = temperature
+#                    break
+        if humidity:
+            pass
+        return success_t
