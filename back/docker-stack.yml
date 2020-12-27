@@ -1,5 +1,5 @@
 version: '3.7'
-# docker build -t  ./
+# docker build -t dugout-backup .
 # docker stack deploy --compose-file docker-stack.yml dugout
 services:
   dugout-backup:
@@ -7,14 +7,26 @@ services:
     networks:
       - swarm_network
       - default
-    env_file:
-      - .env
+    configs:
+      - source: dugout_backup_auth_config
+        target: /dugout-backup/auth.txt
+      - source: dugout_backup_scheduler_config
+        target: /dugout-backup/scheduler.txt
+    volumes:
+      - /home/a/data/elasticsearch-backup/:/dugout-backup/data/
     deploy:
       replicas: 1
       placement:
         constraints:
           - node.hostname == tool
 
+configs:
+  dugout_backup_auth_config:
+    name: dugout_backup_auth_config-0
+    file: ./auth.txt
+  dugout_backup_scheduler_config:
+    name: dugout_backup_scheduler_config-0
+    file: ./scheduler.txt
 networks:
   swarm_network:
     driver: overlay

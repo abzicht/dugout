@@ -1,0 +1,2 @@
+SHELL=/bin/sh
+0 0 * * 0 /dugout-backup/backup.sh
