@@ -13,7 +13,7 @@ services:
       - source: dugout_backup_scheduler_config
         target: /dugout-backup/scheduler.txt
     volumes:
-      - /home/a/data/elasticsearch-backup/:/dugout-backup/data/
+      - /mnt/data/volumes/elasticsearch-backup/:/dugout-backup/data/
     deploy:
       replicas: 1
       placement:
