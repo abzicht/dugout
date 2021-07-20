@@ -28,7 +28,7 @@ The [sensors in question](https://www.banggood.com/Modbus-RS485-Temperature-and-
 have hilariously bad documentation. Multiple sources contradict each other,
 forcing you to fall back to trial-and-error.
 
-Hear are some observations made while exploring this kind of sensor:
+Here are some observations made while exploring this kind of sensor:
 
 * The register addresses named in most documentation are off by one: if the
   documentation states that temperature data is located in register 0x0001,
